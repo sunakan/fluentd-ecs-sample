@@ -10,6 +10,4 @@ RUN bundle install
 
 COPY app.rb ./
 
-EXPOSE 4567
-
-CMD ["bundle", "exec", "ruby", "./app.rb", "-o", "0.0.0.0"]
+CMD ["bash", "-c", "bundle exec ruby ./app.rb -p ${SINATRA_PORT:-4567} -o 0.0.0.0"]
