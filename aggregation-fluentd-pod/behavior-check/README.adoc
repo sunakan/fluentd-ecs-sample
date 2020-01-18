@@ -1,0 +1,47 @@
+= 挙動チェック用
+
+== 実行方法
+
+----
+$ make up
+----
+
+== ログのディレクトリ構成
+
+----
+$ tree s3-clone/
+s3-clone/
+└── sunacket
+    └── suna-log
+        └── year=2020
+            └── month=01
+                └── day=18
+                    └── hour=20
+                        ├── minute=15
+                        │   ├── log_0.gz
+                        │   └── log_1.gz
+                        ├── minute=16
+                        │   ├── log_0.gz
+                        │   ├── log_1.gz
+                        │   └── log_2.gz
+                        ├── minute=17
+                        │   ├── log_0.gz
+                        │   ├── log_1.gz
+                        │   └── log_2.gz
+                        └── minute=18
+                            └── log_0.gz
+----
+
+== ログ
+
+----
+$ gzip -d log_0.gz
+$ cat log_0
+{"container_id":"79fbc2abdf52e4df4f26786e19ca5ab86fbb04745e0c29152a2faba6e2fd4cb3","container_name":"/behavior-check_fake-app_1","source":"stdout","log":"count 300","log_time":"2020-01-
+18T20:15:36+09:00"}
+{"source":"stdout","log":"pizza-0/300","container_id":"79fbc2abdf52e4df4f26786e19ca5ab86fbb04745e0c29152a2faba6e2fd4cb3","container_name":"/behavior-check_fake-app_1","log_time":"2020-0
+1-18T20:15:36+09:00"}
+{"container_id":"79fbc2abdf52e4df4f26786e19ca5ab86fbb04745e0c29152a2faba6e2fd4cb3","container_name":"/behavior-check_fake-app_1","source":"stdout","log":"pizza-1/300","log_time":"2020-0
+1-18T20:15:37+09:00"}
+...
+----
