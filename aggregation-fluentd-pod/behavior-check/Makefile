@@ -1,3 +1,4 @@
+export FLUENTD_PORT=24229
 s3-clone:
 	mkdir s3-clone
 
@@ -8,4 +9,4 @@ down:
 	docker-compose down
 
 clean:
-	sudo rm -rf s3-clone/*
+	rm -rf s3-clone/*

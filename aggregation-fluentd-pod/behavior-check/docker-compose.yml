@@ -11,7 +11,7 @@ services:
     logging:
       driver: fluentd
       options:
-        fluentd-address: "127.0.0.1:24224"
+        fluentd-address: "127.0.0.1:${FLUENTD_PORT}"
         tag: "s3-clone.{{.Name}}"
         fluentd-async-connect: "true"
     depends_on:
@@ -19,10 +19,11 @@ services:
   fluentd:
     image: sunakan/suna-aggregation-fluentd
     ports:
-      - 24224:24224
+      - ${FLUENTD_PORT}:${FLUENTD_PORT}
     volumes:
       - ../aggregation-fluentd/fluent.conf:/fluentd/etc/fluent.conf
     environment:
+      FLUENTD_PORT: ${FLUENTD_PORT}
       FLUENTD_S3_BUCKET: sunacket
       FLUENTD_S3_REGION: ap-northeast-1
       FLUENTD_S3_ENDPOINT: http://minio:9000/
