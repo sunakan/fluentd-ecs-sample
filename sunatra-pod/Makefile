@@ -1,11 +1,16 @@
+export FLUENTD_PORT=24225
+export SINATRA_PORT=4568
+export NGINX_PORT=8080
+config:
+	docker-compose config
 up:
 	docker-compose up
 down:
 	docker-compose down
 curl:
-	curl http://127.0.0.1/suna-app/sunatra && sleep 1
-	curl http://127.0.0.1/suna-app/sunatra && sleep 1
-	curl http://127.0.0.1/suna-app/sunatra
+	curl http://127.0.0.1:${NGINX_PORT}/suna-app/sunatra && sleep 1
+	curl http://127.0.0.1:${NGINX_PORT}/suna-app/sunatra && sleep 1
+	curl http://127.0.0.1:${NGINX_PORT}/suna-app/sunatra
 
 build-sunatra:
 	cd deploy && make build-sunatra

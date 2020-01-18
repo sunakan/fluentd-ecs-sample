@@ -8,10 +8,12 @@ services:
     image: sunakan/sunatra:latest
     volumes:
       - ./sunatra:/app
+    environment:
+      SINATRA_PORT: ${SINATRA_PORT}
     logging:
       driver: fluentd
       options:
-        fluentd-address: "127.0.0.1:24224"
+        fluentd-address: "127.0.0.1:${FLUENTD_PORT}"
         # ImageName=sunakan/sunatra:latest.コンテナ名.コンテナIDが
         tag: "stdout.app.{{.ImageName}}.{{.Name}}.{{.ID}}"
         fluentd-async-connect: "true"
@@ -21,25 +23,28 @@ services:
     container_name: nginx
     image: sunakan/suna-nginx-sidecar:latest
     ports:
-      - 80:80
+      - ${NGINX_PORT}:${NGINX_PORT}
     environment:
-      NGINX_PORT: 80
+      NGINX_PORT: ${NGINX_PORT}
       NGINX_LOCATION: suna-app
       APP_HOST: app
-      APP_PORT: 4567
+      APP_PORT: ${SINATRA_PORT}
       HEALTHCHECK_PATH: /health_check
     logging:
       driver: fluentd
       options:
-        fluentd-address: "127.0.0.1:24224"
+        fluentd-address: "127.0.0.1:${FLUENTD_PORT}"
         tag: "stdout.nginx.{{.ImageName}}.{{.Name}}.{{.ID}}"
         fluentd-async-connect: "true"
     depends_on:
       - app
       - fluentd
   fluentd:
-    tty: true
     container_name: fluentd-sidecar
     image: sunakan/suna-fluentd-sidecar:latest
     ports:
-      - 24224:24224
+      - ${FLUENTD_PORT}:${FLUENTD_PORT}
+    environment:
+      FLUENTD_PORT: ${FLUENTD_PORT}
+    volumes:
+      - ./fluentd-sidecar/fluent.conf:/fluentd/etc/fluent.conf
