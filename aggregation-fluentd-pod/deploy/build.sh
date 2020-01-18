@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -u
+set -e
+
+docker build ../aggregation-fluentd/ \
+    --tag ${DOCKER_AGGREGATION_FLUENTD_REPOSITORY}:latest \
+      --build-arg DOCKER_FLUENTD_TAG=${DOCKER_FLUENTD_TAG}
+    docker tag ${DOCKER_AGGREGATION_FLUENTD_REPOSITORY}:latest ${DOCKER_AGGREGATION_FLUENTD_REPOSITORY}:${DOCKER_FLUENTD_TAG}
+
+echo "${DOCKER_AGGREGATION_FLUENTD_REPOSITORY}:${DOCKER_FLUENTD_TAG}"
