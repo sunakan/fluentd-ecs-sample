@@ -12,7 +12,8 @@ services:
       driver: fluentd
       options:
         fluentd-address: "127.0.0.1:24224"
-        tag: "app.{{.ImageName}}.{{.Name}}.{{.ID}}"
+        # ImageName=sunakan/sunatra:latest.コンテナ名.コンテナIDが
+        tag: "stdout.app.{{.ImageName}}.{{.Name}}.{{.ID}}"
         fluentd-async-connect: "true"
     depends_on:
       - fluentd
@@ -31,7 +32,7 @@ services:
       driver: fluentd
       options:
         fluentd-address: "127.0.0.1:24224"
-        tag: "nginx.{{.ImageName}}.{{.Name}}.{{.ID}}"
+        tag: "stdout.nginx.{{.ImageName}}.{{.Name}}.{{.ID}}"
         fluentd-async-connect: "true"
     depends_on:
       - app
