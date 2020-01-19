@@ -1,0 +1,12 @@
+---
+
+version: "3.7"
+
+networks:
+  container-link:
+    name: suna-network
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.100.0/24"

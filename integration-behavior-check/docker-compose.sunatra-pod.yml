@@ -1,0 +1,55 @@
+---
+
+version: "3.7"
+
+services:
+  app:
+    container_name: sunatra_${POD_NUMBER}
+    image: sunakan/sunatra:latest
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "127.0.0.1:${FLUENTD_PORT}"
+        # ImageName=sunakan/sunatra:latest.コンテナ名.コンテナIDが
+        tag: "container-log.app.{{.ImageName}}.{{.Name}}.{{.ID}}"
+        fluentd-async-connect: "true"
+    environment:
+      SINATRA_PORT: ${SINATRA_PORT}
+    networks:
+      - container-link
+    depends_on:
+      - fluentd
+  nginx:
+    container_name: nginx_${POD_NUMBER}
+    image: sunakan/suna-nginx-sidecar:latest
+    ports:
+      - ${NGINX_PORT}:${NGINX_PORT}
+    environment:
+      NGINX_PORT: ${NGINX_PORT}
+      NGINX_LOCATION: suna-app
+      APP_HOST: app
+      APP_PORT: ${SINATRA_PORT}
+      HEALTHCHECK_PATH: /health_check
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "127.0.0.1:${FLUENTD_PORT}"
+        tag: "container-log.nginx.{{.ImageName}}.{{.Name}}.{{.ID}}"
+        fluentd-async-connect: "true"
+    networks:
+      - container-link
+    depends_on:
+      - app
+      - fluentd
+  fluentd:
+    container_name: fluentd-sidecar_${POD_NUMBER}
+    image: sunakan/suna-fluentd-sidecar:latest
+    ports:
+      - ${FLUENTD_PORT}:${FLUENTD_PORT}
+    environment:
+      FLUENTD_PORT: ${FLUENTD_PORT}
+      POD_LOG_PREFIX: ${POD_LOG_PREFIX}
+      AGGREGATION_FLUENTD_HOST: ${AGGREGATION_FLUENTD_HOST}
+      AGGREGATION_FLUENTD_PORT: ${AGGREGATION_FLUENTD_PORT}
+    networks:
+      - container-link
