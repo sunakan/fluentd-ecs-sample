@@ -21,17 +21,21 @@ services:
     ports:
       - 24225:24225
     environment:
+      FLUENTD_CONF: "fluent.sidecar.conf"
       FLUENTD_PORT: 24225
       POD_NUMBER: 101
       AGGREGATION_FLUENTD_HOST: aggregation-fluentd
       AGGREGATION_FLUENTD_PORT: 24224
     volumes:
       - ./fluent.conf:/fluentd/etc/fluent.conf
+      - ./fluent.sidecar.conf:/fluentd/etc/fluent.sidecar.conf
   aggregation-fluentd:
     image: ${DOCKER_FLUENTD_REPOSITORY}:${DOCKER_FLUENTD_TAG}
     ports:
       - 24224:24224
     environment:
+      FLUENTD_CONF: "fluent.aggregation.conf"
       FLUENTD_PORT: 24224
     volumes:
       - ./fluent.conf:/fluentd/etc/fluent.conf
+      - ./fluent.aggregation.conf:/fluentd/etc/fluent.aggregation.conf
