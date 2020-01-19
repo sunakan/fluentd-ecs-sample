@@ -1,0 +1,1 @@
+= nginx -> fluentd -> 集約用fluentd

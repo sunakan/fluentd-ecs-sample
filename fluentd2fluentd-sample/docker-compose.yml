@@ -1,0 +1,37 @@
+---
+
+version: "3.7"
+
+services:
+  nginx:
+    image: nginx:stable
+    ports:
+      - 80:80
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "127.0.0.1:24225"
+        # ImageName=sunakan/sunatra:latest.コンテナ名.コンテナIDが
+        tag: "container-log.nginx.{{.ImageName}}.{{.Name}}.{{.ID}}"
+        fluentd-async-connect: "true"
+    depends_on:
+      - fluentd-sidecar
+  fluentd-sidecar:
+    image: ${DOCKER_FLUENTD_REPOSITORY}:${DOCKER_FLUENTD_TAG}
+    ports:
+      - 24225:24225
+    environment:
+      FLUENTD_PORT: 24225
+      POD_NUMBER: 101
+      AGGREGATION_FLUENTD_HOST: aggregation-fluentd
+      AGGREGATION_FLUENTD_PORT: 24224
+    volumes:
+      - ./fluent.conf:/fluentd/etc/fluent.conf
+  aggregation-fluentd:
+    image: ${DOCKER_FLUENTD_REPOSITORY}:${DOCKER_FLUENTD_TAG}
+    ports:
+      - 24224:24224
+    environment:
+      FLUENTD_PORT: 24224
+    volumes:
+      - ./fluent.conf:/fluentd/etc/fluent.conf
