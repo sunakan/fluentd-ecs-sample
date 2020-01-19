@@ -67,6 +67,7 @@ resource "aws_lb_target_group" "this" {
   protocol             = "TCP"
   vpc_id               = var.vpc_id
   deregistration_delay = 180
+  target_type          = "ip"
   health_check {
     protocol            = "TCP"
     port                = "traffic-port"
