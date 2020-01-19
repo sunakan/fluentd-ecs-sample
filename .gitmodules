@@ -1,0 +1,3 @@
+[submodule "infra/tf-and-awscli"]
+	path = infra/tf-and-awscli
+	url = https://github.com/sunakan/tf-and-awscli.git
