@@ -1,4 +1,6 @@
 s3-clone
+aws-conf
+aws
 
 # Created by https://www.gitignore.io/api/vim,linux,macos,emacs,windows,terraform,intellij+all
 # Edit at https://www.gitignore.io/?templates=vim,linux,macos,emacs,windows,terraform,intellij+all
