@@ -1,6 +1,7 @@
 export FLUENTD_PORT=24225
 export SINATRA_PORT=4568
 export NGINX_PORT=8080
+export POD_LOG_PREFIX=s3-clone
 config:
 	docker-compose config
 up:

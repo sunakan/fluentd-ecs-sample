@@ -15,7 +15,7 @@ services:
       options:
         fluentd-address: "127.0.0.1:${FLUENTD_PORT}"
         # ImageName=sunakan/sunatra:latest.コンテナ名.コンテナIDが
-        tag: "stdout.app.{{.ImageName}}.{{.Name}}.{{.ID}}"
+        tag: "container-log.app.{{.ImageName}}.{{.Name}}.{{.ID}}"
         fluentd-async-connect: "true"
     depends_on:
       - fluentd
@@ -34,7 +34,7 @@ services:
       driver: fluentd
       options:
         fluentd-address: "127.0.0.1:${FLUENTD_PORT}"
-        tag: "stdout.nginx.{{.ImageName}}.{{.Name}}.{{.ID}}"
+        tag: "container-log.nginx.{{.ImageName}}.{{.Name}}.{{.ID}}"
         fluentd-async-connect: "true"
     depends_on:
       - app
@@ -46,5 +46,15 @@ services:
       - ${FLUENTD_PORT}:${FLUENTD_PORT}
     environment:
       FLUENTD_PORT: ${FLUENTD_PORT}
+      POD_LOG_PREFIX: ${POD_LOG_PREFIX}
+      AGGREGATION_FLUENTD_HOST: fake-aggregation-fluentd
+      AGGREGATION_FLUENTD_PORT: 24224
     volumes:
       - ./fluentd-sidecar/fluent.conf:/fluentd/etc/fluent.conf
+    depends_on:
+      - fake-aggregation-fluentd
+  fake-aggregation-fluentd:
+    container_name: fake-aggregation-fluentd
+    image: fluentd:v1.8-1
+    volumes:
+      - ./fluent.stdout.conf:/fluentd/etc/fluent.conf
