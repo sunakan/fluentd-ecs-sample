@@ -27,8 +27,8 @@ module "vpc" {
   enable_dns_support   = true # Should be true to enable DNS support in the Default VPC
   #enable_classiclink             = false
   #enable_classiclink_dns_support = false
-  enable_nat_gateway = false
-  single_nat_gateway = false
+  enable_nat_gateway = true
+  single_nat_gateway = true
 
   #customer_gateways = {
   #  IP1 = {
