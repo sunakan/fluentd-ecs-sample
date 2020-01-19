@@ -11,7 +11,6 @@ locals {
     "production", "prd",
   )[local.env_full]
 
-  # billingは昔からあるTag
   common_tags = {
     Team        = "suna"
     billing     = "sunatra"
@@ -52,7 +51,7 @@ resource "aws_s3_bucket_public_access_block" "this" {
 ################################################################################
 resource "aws_lb" "this" {
   name                       = "${local.service_name_with_env}-nlb"
-  internal                   = false
+  internal                   = true
   load_balancer_type         = "network"
   subnets                    = var.nlb_subnet_ids
   enable_deletion_protection = false
