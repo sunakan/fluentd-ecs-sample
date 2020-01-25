@@ -1,3 +1,3 @@
-{"year":2020, "month":"01", "day":"01", "hour":"20", "my-time":"2020-01-01T20:20", "log_body":"hello"}
-{"year":2020, "month":"01", "day":"02", "hour":"20", "my-time":"2020-01-01T20:20", "log_body":"hello"}
-{"year":2020, "month":"01", "day":"03", "hour":"20", "my-time":"2020-01-01T20:20", "log_body":"hello"}
+{"year":2020, "month":"01", "day":"01", "hour":"20", "my-time":"2020-01-01T20:21:10+09:00", "log_body":"hello1"}
+{"year":2020, "month":"01", "day":"01", "hour":"20", "my-time":"2020-01-01T20:21:11+09:00", "log_body":"hello1"}
+{"year":2020, "month":"01", "day":"01", "hour":"20", "my-time":"2020-01-01T20:21:12+09:00", "log_body":"hello1"}
