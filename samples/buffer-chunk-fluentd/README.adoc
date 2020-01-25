@@ -1,0 +1,13 @@
+== bufferオプションの確認用サンプル
+
+----
+$ make bash
+$ fluentd -c fluentd/etc/fluent.conf
+...
+----
+
+----
+$ vim sample.log
+----
+
+tailでなめているので、*.logを追記するだけでok

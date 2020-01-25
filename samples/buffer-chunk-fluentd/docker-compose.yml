@@ -1,0 +1,10 @@
+---
+
+version: "3.7"
+
+services:
+  fluentd:
+    image: fluentd:v1.8-debian-1
+    volumes:
+      - ./fluent.conf:/fluentd/etc/fluent.conf
+      - ./sample.log:/fluentd/log/sample/sample.log
