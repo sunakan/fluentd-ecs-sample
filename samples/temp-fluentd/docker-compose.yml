@@ -1,0 +1,10 @@
+---
+
+version: "3.7"
+
+services:
+  fluentd:
+    working_dir: /fluentd/etc/
+    build: .
+    volumes:
+      - ./:/app
